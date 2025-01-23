@@ -28,15 +28,17 @@ def inference():
   prompt = f"""
   Using the chat history:
   {history}
-  
+
   Answer the user's message: {message}
   """
   
+  history.append({"role": "user", "message": message})
+  
   response = model.generate_content(prompt)
   
-  history.append({'user': message, 'bot': response.text})
+  history.append({"role": "bot", "message": response.text})
   
-  return jsonify({'response': response.text, 'history': history}), 200
+  return jsonify({"response": response.text, "history": history}), 200
 
 if __name__ == '__main__':
   app.run(debug=True)
