@@ -17,7 +17,7 @@ function UserMessage({ message }: { message: string }) {
 
 function BotMessage({ message }: { message: string }) {
   return (
-    <div className="flex items-start gap-2 ml-5">
+    <div className="flex items-start gap-2 px-5">
       <Image
         src="/gemini-icon.png"
         width={24}
