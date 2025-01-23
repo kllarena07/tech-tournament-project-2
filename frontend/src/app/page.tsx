@@ -69,9 +69,9 @@ export default function Home() {
       <header>
         <h1 className="font-bold text-3xl text-center p-5">Gemini API Demo</h1>
       </header>
-      <ScrollArea className="h-full">
-        {chatHistory.length > 0 &&
-          chatHistory.map(
+      {chatHistory.length > 0 ? (
+        <ScrollArea className="h-full">
+          {chatHistory.map(
             (chat: { role: string; message: string }, index: number) => (
               <div className="mb-5 flex w-full" key={index}>
                 {chat.role === "user" ? (
@@ -82,7 +82,18 @@ export default function Home() {
               </div>
             )
           )}
-      </ScrollArea>
+        </ScrollArea>
+      ) : (
+        <div className="flex items-center justify-center w-full h-full">
+          <Image
+            src="/aic.jpg"
+            width={170}
+            height={170}
+            alt="Artificial Intelligence Club at Dearborn"
+            className="rounded-full"
+          />
+        </div>
+      )}
       <footer className="flex px-5 pb-5 gap-5">
         <Textarea
           placeholder="Message Gemini"
