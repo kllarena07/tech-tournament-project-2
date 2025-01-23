@@ -20,13 +20,23 @@ model = genai.GenerativeModel('gemini-1.5-flash')
 def inference():
   data = request.get_json()
   message = data.get('message', '')
+  history = data.get('history', [])
   
   if not message:
     return jsonify({'error': 'Message is required'}), 400
   
-  response = model.generate_content(message)
+  prompt = f"""
+  Using the chat history:
+  {history}
   
-  return jsonify({'response': response.text}), 200
+  Answer the user's message: {message}
+  """
+  
+  response = model.generate_content(prompt)
+  
+  history.append({'user': message, 'bot': response.text})
+  
+  return jsonify({'response': response.text, 'history': history}), 200
 
 if __name__ == '__main__':
   app.run(debug=True)
